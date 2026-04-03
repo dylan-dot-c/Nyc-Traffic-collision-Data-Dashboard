@@ -1,27 +1,31 @@
 import { useState, useEffect } from "react";
 import {
   getCrashesYTD,
-  getLastWeekCrashes,
-  getCrashesMTD,
+  getInjuredYTD,
+  getMostDangerousBoroughYTD,
+  getMostContributingFactor,
 } from "../queries/getKpi";
 
 const useCollisionStats = () => {
   const [stats, setStats] = useState({
-    ytd: null,
-    currentMonth: null,
-    last7: null,
+    crashes: null,
+    injuries: null,
+    livesLost: null,
+    borough: { borough: "", count: 0 },
   });
 
   useEffect(() => {
     const fetchStats = async () => {
       const crashesYTD = await getCrashesYTD();
-      const crashesLast7Days = await getLastWeekCrashes();
-      const crashesYesterday = await getCrashesMTD();
+      const getInjured = await getInjuredYTD();
+      const dangerous = await getMostDangerousBoroughYTD();
+      // const factor = await getMostContributingFactor();
 
       setStats(() => ({
-        currentMonth: crashesYesterday.data[0].count,
-        ytd: crashesYTD.data[0].count,
-        last7: crashesLast7Days.data[0].count,
+        crashes: crashesYTD,
+        injuries: getInjured.injuries,
+        livesLost: getInjured.lives_lost,
+        borough: dangerous,
       }));
     };
 

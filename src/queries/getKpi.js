@@ -5,18 +5,19 @@ const client = new SodaClient({
   appToken: "xmrs8yC0GCBGmZxmjdOOUIANU", // Optional but recommended
 });
 
-const getCrashesYTD = async () => {
-  const today = new Date();
-  const thisYearStart = new Date(today.getFullYear(), 0, 1);
-  const thisYearStartStr = thisYearStart.toISOString().split("T")[0];
+const today = new Date();
+const last90 = new Date(today.setDate(today.getDate() - 90));
+const last90DateStr = last90.toISOString().split("T")[0];
 
+const getCrashesYTD = async () => {
   const crashes = await client
     .query("h9gi-nx95")
     .select("count(*)")
-    .where("crash_date", ">=", `${thisYearStartStr}T00:00:00.000`)
+    .where("crash_date", ">=", `${last90DateStr}T00:00:00.000`)
     .execute();
 
-  return crashes;
+  console.log(crashes);
+  return crashes.data[0].count;
 };
 
 const getLastWeekCrashes = async () => {
@@ -47,4 +48,49 @@ const getCrashesMTD = async () => {
   return crashes;
 };
 
-export { getCrashesYTD, getLastWeekCrashes, getCrashesMTD };
+const getInjuredYTD = async () => {
+  const crashes = await client
+    .query("h9gi-nx95")
+    .select([
+      "sum(number_of_persons_injured) as injuries",
+      "sum(number_of_persons_killed) as lives_lost",
+    ])
+    .where("crash_date", ">=", `${last90DateStr}T00:00:00.000`)
+    .execute();
+
+  return crashes.data[0];
+};
+
+const getMostDangerousBoroughYTD = async () => {
+  const result = await client
+    .query("h9gi-nx95")
+    .select(["borough", "count(*)"])
+    .groupBy("borough")
+    .orderBy("count", "DESC")
+    .where("crash_date", ">=", `${last90DateStr}T00:00:00.000`)
+    .execute();
+
+  return result.data[0];
+};
+
+const getMostContributingFactor = async () => {
+  const result = await client
+    .query("h9gi-nx95")
+    .select(["contributing_factor_vehicle_1", "count(*)"])
+    .groupBy("contributing_factor_vehicle_1")
+    .orderBy("count", "DESC")
+    .where("crash_date", ">=", `${last90DateStr}T00:00:00.000`)
+    .where("contributing_factor_vehicle_1", "!=", "Unspecified")
+    .execute();
+
+  return result;
+};
+
+export {
+  getCrashesYTD,
+  getLastWeekCrashes,
+  getCrashesMTD,
+  getInjuredYTD,
+  getMostDangerousBoroughYTD,
+  getMostContributingFactor,
+};
