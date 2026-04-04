@@ -1,12 +1,54 @@
 import "./App.css";
-import results from "./queries/data";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import useCollisionStats from "./hooks/useCollisionStats";
 import Kpi from "./components/Kpi";
+import DataTable from "./components/DataTable";
+import useTableStats from "./hooks/useTableStats";
 
 function App() {
   const data = useCollisionStats();
+  const result = useTableStats();
 
-  console.log(data);
+  console.log(result);
+  const columns = [
+    {
+      name: "ID",
+      key: "collision_id",
+    },
+    {
+      name: "Crash Date",
+      key: "crash_date",
+    },
+    {
+      name: "Crash Time",
+      key: "crash_time",
+    },
+    {
+      name: "Borough",
+      key: "borough",
+    },
+    {
+      name: "Street",
+      key: "street",
+    },
+
+    {
+      name: "Injuries",
+      key: "number_of_persons_injured",
+    },
+    {
+      name: "Lives Lost",
+      key: "number_of_persons_killed",
+    },
+    {
+      name: "Reason",
+      key: "contributing_factor_vehicle_1",
+    },
+    {
+      name: "Vehicle Type",
+      key: "vehicle_type_code1",
+    },
+  ];
 
   return (
     <div className="main--container">
@@ -60,12 +102,11 @@ function App() {
           </select>
         </section>
 
-        {results.map((result, idx) => (
-          <li key={idx}>
-            {new Date(result.crash_date).toString().slice(0, 15) + " @"}
-            {result.crash_time} {result.borough}
-          </li>
-        ))}
+        {result.loading ? (
+          <h1>Loading</h1>
+        ) : (
+          <DataTable columns={columns} data={result.info} />
+        )}
       </main>
     </div>
   );
