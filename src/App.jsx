@@ -4,10 +4,22 @@ import useCollisionStats from "./hooks/useCollisionStats";
 import Kpi from "./components/Kpi";
 import DataTable from "./components/DataTable";
 import useTableStats from "./hooks/useTableStats";
+import { useState } from "react";
 
 function App() {
+  const [borough, setBorough] = useState("");
+  const [startDate, setStartDate] = useState(formatForInput(new Date()));
+
   const data = useCollisionStats();
-  const result = useTableStats();
+  const result = useTableStats(borough, startDate);
+
+  function formatForInput(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate() + 1).padStart(2, "0");
+
+    return `${year}-${month}-${day}`; // yyyy-MM-dd
+  }
 
   console.log(result);
   const columns = [
@@ -93,7 +105,13 @@ function App() {
 
         <section>
           <h2>Last 90 days NYC</h2>
-          <select name="borough" id="borough">
+          <select
+            name="borough"
+            id="borough"
+            value={borough}
+            onChange={(e) => setBorough(e.target.value)}
+          >
+            <option value="">All</option>
             <option value="BRONX">Bronx</option>
             <option value="QUEENS">Queens</option>
             <option value="MANHATTAN">Manhattan</option>
@@ -101,6 +119,14 @@ function App() {
             <option value="BROOKLYN">Brooklyn </option>
           </select>
         </section>
+
+        <input
+          type="date"
+          onChange={(e) =>
+            setStartDate(formatForInput(new Date(e.target.value)))
+          }
+          value={startDate}
+        />
 
         {result.loading ? (
           <h1>Loading</h1>

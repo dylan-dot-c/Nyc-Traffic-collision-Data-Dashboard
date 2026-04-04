@@ -9,8 +9,8 @@ const today = new Date();
 const last90 = new Date(today.setDate(today.getDate() - 90));
 const last90DateStr = last90.toISOString().split("T")[0];
 
-const getTableData = async () => {
-  const result = await client
+const getTableData = async (borough) => {
+  let query = client
     .query("h9gi-nx95")
     .select([
       "collision_id",
@@ -23,12 +23,16 @@ const getTableData = async () => {
       "COALESCE(contributing_factor_vehicle_1, 'Unknown') as contributing_factor_vehicle_1",
       "COALESCE(vehicle_type_code1, 'Unknown') as vehicle_type_code1",
     ])
-    .where("crash_time", ">=", `${last90DateStr}T00:00:00.000`)
     .orderBy("crash_date", "desc")
-    .limit(100)
-    .execute();
+    .orderBy("crash_time", "desc")
+    .limit(100);
 
-  console.log("DATA RETURNED", result.data);
+  if (borough != "") {
+    query = query.where("borough", "=", borough);
+  }
+
+  // now fetch data
+  const result = await query.execute();
 
   return result.data;
 };

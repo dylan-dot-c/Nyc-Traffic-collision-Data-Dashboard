@@ -3,7 +3,6 @@ import {
   getCrashesYTD,
   getInjuredYTD,
   getMostDangerousBoroughYTD,
-  getMostContributingFactor,
 } from "../queries/getKpi";
 
 const useCollisionStats = () => {

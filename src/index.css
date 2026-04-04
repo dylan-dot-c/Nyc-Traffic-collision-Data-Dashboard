@@ -136,3 +136,7 @@ main {
 table {
   font-size: 10px;
 }
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f0f8ff; /* light blue for odd rows */
+}
