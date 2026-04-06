@@ -5,6 +5,7 @@ import Kpi from "./components/Kpi";
 import DataTable from "./components/DataTable";
 import useTableStats from "./hooks/useTableStats";
 import { useState } from "react";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   const [borough, setBorough] = useState("");
@@ -64,19 +65,11 @@ function App() {
 
   return (
     <div className="main--container">
-      <aside className="sidebar">
-        <h3>NYC Traffic</h3>
-
-        <ul>
-          <li>Overview</li>
-          <li>Deep Dive</li>
-          <li>Boroughs</li>
-          {/* <li></li> */}
-          <li></li>
-        </ul>
-      </aside>
+      <Sidebar />
       <main>
         <h1>NYC Collision DashBoard</h1>
+        <hr />
+        <h2>Last 90 days in NYC</h2>
 
         <div className="kpi-container">
           <Kpi
@@ -103,21 +96,26 @@ function App() {
           />
         </div>
 
+        <hr />
+
         <section>
-          <h2>Last 90 days NYC</h2>
-          <select
-            name="borough"
-            id="borough"
-            value={borough}
-            onChange={(e) => setBorough(e.target.value)}
-          >
-            <option value="">All</option>
-            <option value="BRONX">Bronx</option>
-            <option value="QUEENS">Queens</option>
-            <option value="MANHATTAN">Manhattan</option>
-            <option value="STATEN ISLAND">Staten island</option>
-            <option value="BROOKLYN">Brooklyn </option>
-          </select>
+          <h2>Latest Crash History in NYC</h2>
+
+          <form>
+            <select
+              name="borough"
+              id="borough"
+              value={borough}
+              onChange={(e) => setBorough(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="BRONX">Bronx</option>
+              <option value="QUEENS">Queens</option>
+              <option value="MANHATTAN">Manhattan</option>
+              <option value="STATEN ISLAND">Staten island</option>
+              <option value="BROOKLYN">Brooklyn </option>
+            </select>
+          </form>
         </section>
 
         <input
