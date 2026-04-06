@@ -42,18 +42,21 @@ Here's a walkthrough of implemented user stories:
 
 <img src='https://i.imgur.com/FB0jlDg.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
+<img width="1387" height="745" alt="image" src="https://github.com/user-attachments/assets/68d79edd-e83c-448b-8ae1-16a4a93d6a3d" />
+
+
+
 <!-- Replace this with whatever GIF tool you used! -->
 
-GIF created with ...
-
-<!-- Recommended tools:
-[Kap](https://getkap.co/) for macOS
-[ScreenToGif](https://www.screentogif.com/) for Windows
-[peek](https://github.com/phw/peek) for Linux. -->
+//github.com/phw/peek) for Linux. -->
 
 ## Notes
 
 Describe any challenges encountered while building the app.
+Alot...
+
+First had to learn soda3 api used for querying the data
+After than, I had an error with React DataTable so I just used bootstrap table instead
 
 ## License
 
