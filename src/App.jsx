@@ -1,26 +1,22 @@
 import "./App.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-datepicker/dist/react-datepicker.css";
 import useCollisionStats from "./hooks/useCollisionStats";
 import Kpi from "./components/Kpi";
 import DataTable from "./components/DataTable";
 import useTableStats from "./hooks/useTableStats";
 import { useState } from "react";
 import Sidebar from "./components/Sidebar";
+import DatePicker from "react-datepicker";
+import Loading from "./components/Loading";
 
 function App() {
   const [borough, setBorough] = useState("");
-  const [startDate, setStartDate] = useState(formatForInput(new Date()));
+  const [selectedDate, setSelectedDate] = useState(new Date("03/31/2026"));
 
   const data = useCollisionStats();
-  const result = useTableStats(borough, startDate);
-
-  function formatForInput(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate() + 1).padStart(2, "0");
-
-    return `${year}-${month}-${day}`; // yyyy-MM-dd
-  }
+  const result = useTableStats(borough, selectedDate);
 
   console.log(result);
   const columns = [
@@ -63,74 +59,95 @@ function App() {
     },
   ];
 
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <div className="main--container">
       <Sidebar />
       <main>
         <h1>NYC Collision DashBoard</h1>
+
         <hr />
         <h2>Last 90 days in NYC</h2>
 
-        <div className="kpi-container">
-          <Kpi
-            title={"Total Collisions"}
-            value={parseInt(data.crashes).toLocaleString("en-US")}
-            color={"red"}
-          />
-          <Kpi
-            title={"People Injured"}
-            value={parseInt(data.injuries).toLocaleString("en-US")}
-            color={"blue"}
-          />
-          <Kpi
-            title={"Lives Lost"}
-            value={parseInt(data.livesLost).toLocaleString("en-US")}
-            color={"orange"}
-          />
+        {data.loadingKPI ? (
+          <Loading />
+        ) : (
+          <div className="kpi-container">
+            <Kpi
+              title={"Total Collisions"}
+              value={parseInt(data.stats.crashes).toLocaleString("en-US")}
+              color={"red"}
+            />
+            <Kpi
+              title={"People Injured"}
+              value={parseInt(data.stats.injuries).toLocaleString("en-US")}
+              color={"blue"}
+            />
+            <Kpi
+              title={"Lives Lost"}
+              value={parseInt(data.stats.livesLost).toLocaleString("en-US")}
+              color={"orange"}
+            />
 
-          <Kpi
-            title={"Most Accidents"}
-            value={parseInt(data.borough.count).toLocaleString("en-US")}
-            color={"red"}
-            details={"happened in " + data.borough.borough}
-          />
-        </div>
-
+            <Kpi
+              title={"Most Accidents"}
+              value={parseInt(data.stats.borough.count).toLocaleString("en-US")}
+              color={"red"}
+              details={"happened in " + data.stats.borough.borough}
+            />
+          </div>
+        )}
         <hr />
 
         <section>
           <h2>Latest Crash History in NYC</h2>
 
           <form>
-            <select
-              name="borough"
-              id="borough"
-              value={borough}
-              onChange={(e) => setBorough(e.target.value)}
-            >
-              <option value="">All</option>
-              <option value="BRONX">Bronx</option>
-              <option value="QUEENS">Queens</option>
-              <option value="MANHATTAN">Manhattan</option>
-              <option value="STATEN ISLAND">Staten island</option>
-              <option value="BROOKLYN">Brooklyn </option>
-            </select>
+            <h3>Filter By: </h3>
+
+            <div>
+              <label htmlFor="">Borough</label>
+              <select
+                name="borough"
+                id="borough"
+                value={borough}
+                onChange={(e) => setBorough(e.target.value)}
+              >
+                <option value="">All</option>
+                <option value="BRONX">Bronx</option>
+                <option value="QUEENS">Queens</option>
+                <option value="MANHATTAN">Manhattan</option>
+                <option value="STATEN ISLAND">Staten island</option>
+                <option value="BROOKLYN">Brooklyn </option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="">Crash Date</label>
+              <DatePicker
+                selected={selectedDate}
+                onChange={handleDateChange}
+                showIcon
+              />
+            </div>
           </form>
         </section>
 
-        <input
-          type="date"
-          onChange={(e) =>
-            setStartDate(formatForInput(new Date(e.target.value)))
-          }
-          value={startDate}
-        />
-
-        {result.loading ? (
-          <h1>Loading</h1>
-        ) : (
-          <DataTable columns={columns} data={result.info} />
-        )}
+        <section>
+          {result.loading ? (
+            <Loading />
+          ) : (
+            <div>
+              <center>
+                <p>Showing {result.info.length} rows</p>
+              </center>
+              <DataTable columns={columns} data={result.info} />
+            </div>
+          )}
+        </section>
       </main>
     </div>
   );

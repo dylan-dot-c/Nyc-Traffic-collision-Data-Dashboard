@@ -5,11 +5,10 @@ const client = new SodaClient({
   appToken: "xmrs8yC0GCBGmZxmjdOOUIANU", // Optional but recommended
 });
 
-const today = new Date();
-const last90 = new Date(today.setDate(today.getDate() - 90));
-const last90DateStr = last90.toISOString().split("T")[0];
+const getTableData = async (borough, crashDate) => {
+  const date = new Date(crashDate);
+  const dateStr = date.toISOString().split("T")[0];
 
-const getTableData = async (borough) => {
   let query = client
     .query("h9gi-nx95")
     .select([
@@ -23,6 +22,7 @@ const getTableData = async (borough) => {
       "COALESCE(contributing_factor_vehicle_1, 'Unknown') as contributing_factor_vehicle_1",
       "COALESCE(vehicle_type_code1, 'Unknown') as vehicle_type_code1",
     ])
+    .where("crash_date", "=", `${dateStr}T00:00:00.000`)
     .orderBy("crash_date", "desc")
     .orderBy("crash_time", "desc")
     .limit(100);

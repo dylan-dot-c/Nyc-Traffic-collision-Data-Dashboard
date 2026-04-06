@@ -6,6 +6,8 @@ import {
 } from "../queries/getKpi";
 
 const useCollisionStats = () => {
+  const [loadingKPI, setLoading] = useState(true);
+
   const [stats, setStats] = useState({
     crashes: null,
     injuries: null,
@@ -26,12 +28,14 @@ const useCollisionStats = () => {
         livesLost: getInjured.lives_lost,
         borough: dangerous,
       }));
+
+      setLoading(false);
     };
 
     fetchStats();
   }, []);
 
-  return stats;
+  return { stats, loadingKPI };
 };
 
 export default useCollisionStats;
