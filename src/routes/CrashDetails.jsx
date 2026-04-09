@@ -9,6 +9,8 @@ const CrashDetails = () => {
 
   if (loading) return <Loading />;
 
+  if (data == null) return <h2>Incorrect Crash ID: {params.crash_id}</h2>;
+
   const hasInjuries =
     +data.numberOfPersonsInjured > 0 || +data.numberOfPersonsKilled > 0;
 
