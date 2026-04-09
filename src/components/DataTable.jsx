@@ -1,4 +1,5 @@
 import Table from "react-bootstrap/Table";
+import { Link } from "react-router";
 
 const DataTable = ({ columns, data }) => {
   console.log(data);
@@ -13,8 +14,15 @@ const DataTable = ({ columns, data }) => {
       </thead>
       <tbody>
         {data.map((item) => (
-          <tr>
+          <tr key={item.crash_id}>
             {Object.entries(item).map((row, idx) => {
+              if (idx == 0) {
+                return (
+                  <td key={row[0]}>
+                    <Link to={`/crash/${row[1]}`}>{row[1]}</Link>
+                  </td>
+                );
+              }
               if (idx == 1) {
                 return (
                   <td key={row[0]}>

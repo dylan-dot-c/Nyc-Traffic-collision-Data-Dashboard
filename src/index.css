@@ -35,7 +35,7 @@
 body {
   margin: 0;
   font-family: "Poppins";
-  background: linear-gradient(rgb(221, 255, 232), rgb(226, 255, 238));
+  background: linear-gradient(rgb(226, 244, 255));
   background-attachment: fixed;
 }
 
@@ -172,7 +172,7 @@ table {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: #f0f8ff; /* light blue for odd rows */
+  background-color: #3492e6; /* light blue for odd rows */
 }
 
 aside h2 {
@@ -227,8 +227,166 @@ aside h2 {
   }
 }
 
+a button {
+  border: none;
+  background-color: #7abfff;
+  padding: 10px 20px;
+  border-radius: 1rem;
+}
+
 center {
   color: rgba(0, 153, 255, 0.945);
   font-size: 20px;
   font-weight: bold;
+}
+
+/* crash page styling */
+
+.crash-details {
+  max-width: 720px;
+  padding: 1.5rem;
+}
+
+/* Header */
+.crash-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.crash-title {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.crash-subtitle {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+.crash-badge {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.crash-badge--danger {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* Metric cards */
+.crash-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.metric-card {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.metric-card__label {
+  font-size: 12px;
+  color: #888;
+  margin: 0 0 4px;
+}
+
+.metric-card__value {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Sections */
+.crash-section {
+  border: 0.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  background-color: #f9fafb;
+}
+
+.crash-section__heading {
+  font-size: 13px;
+  font-weight: 500;
+  color: #888;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Table */
+.crash-table {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+}
+
+.crash-table__th {
+  text-align: left;
+  padding: 6px 0;
+  color: #888;
+  font-weight: 400;
+  border-bottom: 0.5px solid #e5e7eb;
+}
+
+.crash-table__th--center {
+  text-align: center;
+}
+
+.crash-table__row + .crash-table__row .crash-table__td {
+  border-top: 0.5px solid #e5e7eb;
+}
+
+.crash-table__td {
+  padding: 7px 0;
+}
+
+.crash-table__td--center {
+  text-align: center;
+}
+
+/* Detail list */
+.crash-dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+  margin: 0;
+}
+
+.crash-dl__item {
+  /* grouping wrapper */
+}
+
+.crash-dl__label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.crash-dl__value {
+  font-size: 14px;
+  margin: 0;
+}
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  margin: auto;
+  h2 {
+    font-size: 20px;
+    font-family: "Poppins";
+  }
 }
