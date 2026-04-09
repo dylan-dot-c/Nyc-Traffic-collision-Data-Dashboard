@@ -39,6 +39,10 @@ body {
   background-attachment: fixed;
 }
 
+a {
+  color: unset;
+}
+
 #root {
   max-width: 100%;
   margin: 0 auto;
@@ -188,12 +192,21 @@ aside h2 {
 
   h3 {
     margin: 0;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 300;
   }
 
   &.active {
     background-color: rgb(42, 151, 252);
+  }
+
+  a {
+    color: unset;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    text-decoration: none;
+    font-weight: 600;
   }
 }
 

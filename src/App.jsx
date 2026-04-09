@@ -64,8 +64,7 @@ function App() {
   };
 
   return (
-    <div className="main--container">
-      <Sidebar />
+    <div className="">
       <main>
         <h1>NYC Collision DashBoard</h1>
 
