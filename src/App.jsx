@@ -6,19 +6,22 @@ import useCollisionStats from "./hooks/useCollisionStats";
 import Kpi from "./components/Kpi";
 import DataTable from "./components/DataTable";
 import useTableStats from "./hooks/useTableStats";
-import { useState } from "react";
-import Sidebar from "./components/Sidebar";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Loading from "./components/Loading";
 
 function App() {
   const [borough, setBorough] = useState("");
-  const [selectedDate, setSelectedDate] = useState(new Date("03/31/2026"));
-
   const data = useCollisionStats();
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const result = useTableStats(borough, selectedDate);
 
-  console.log(result);
+  useEffect(() => {
+    setSelectedDate(data.stats.latestDate);
+  }, [data]);
+
+  console.log(result, data);
   const columns = [
     {
       name: "ID",
