@@ -6,10 +6,9 @@ import useCollisionStats from "./hooks/useCollisionStats";
 import Kpi from "./components/Kpi";
 import DataTable from "./components/DataTable";
 import useTableStats from "./hooks/useTableStats";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import Loading from "./components/Loading";
-import LineChartComp from "./components/LineChart";
 import PieChartComp from "./components/PieChart";
 import CrashBarChart from "./components/BarChart";
 
@@ -17,13 +16,13 @@ function App() {
   const [borough, setBorough] = useState("");
   const data = useCollisionStats();
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const result = useTableStats(borough, selectedDate);
+  const [selectedDate, setSelectedDate] = useState(null);
 
-  useEffect(() => {
-    setSelectedDate(data.stats.latestDate);
-  }, [data]);
+  // derive the effective date — user pick takes priority, fallback to latestDate
+  const effectiveDate =
+    selectedDate ?? (data?.stats?.latestDate ? data.stats.latestDate : null);
 
+  const result = useTableStats(borough, effectiveDate);
   console.log("DATA", data);
   const columns = [
     {
@@ -143,7 +142,7 @@ function App() {
             <div>
               <label htmlFor="">Crash Date</label>
               <DatePicker
-                selected={selectedDate}
+                selected={effectiveDate}
                 onChange={handleDateChange}
                 showIcon
               />
