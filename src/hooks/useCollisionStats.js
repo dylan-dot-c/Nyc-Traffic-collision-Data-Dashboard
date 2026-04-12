@@ -17,6 +17,8 @@ const useCollisionStats = () => {
     latestDate: new Date(),
   });
 
+  const [boroughStats, setBoroughStats] = useState([]);
+
   useEffect(() => {
     const fetchStats = async () => {
       const crashesYTD = await getCrashesYTD();
@@ -35,9 +37,11 @@ const useCollisionStats = () => {
         crashes: crashesYTD,
         injuries: getInjured.injuries,
         livesLost: getInjured.lives_lost,
-        borough: dangerous,
+        borough: dangerous.data[0],
         latestDate: new Date(`${maxDateStr}T00:00:00.000`),
       }));
+
+      setBoroughStats(dangerous.data);
 
       setLoading(false);
     };
@@ -45,7 +49,7 @@ const useCollisionStats = () => {
     fetchStats();
   }, []);
 
-  return { stats, loadingKPI };
+  return { stats, loadingKPI, boroughStats };
 };
 
 export default useCollisionStats;

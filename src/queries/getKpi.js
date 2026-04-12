@@ -64,13 +64,13 @@ const getInjuredYTD = async () => {
 const getMostDangerousBoroughYTD = async () => {
   const result = await client
     .query("h9gi-nx95")
-    .select(["borough", "count(*)"])
+    .select(["COALESCE(borough, 'Unknown') as borough", "count(*)"])
     .groupBy("borough")
     .orderBy("count", "DESC")
     .where("crash_date", ">=", `${last90DateStr}T00:00:00.000`)
     .execute();
 
-  return result.data[0];
+  return result;
 };
 
 const getMostContributingFactor = async () => {

@@ -9,6 +9,9 @@ import useTableStats from "./hooks/useTableStats";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Loading from "./components/Loading";
+import LineChartComp from "./components/LineChart";
+import PieChartComp from "./components/PieChart";
+import CrashBarChart from "./components/BarChart";
 
 function App() {
   const [borough, setBorough] = useState("");
@@ -21,7 +24,7 @@ function App() {
     setSelectedDate(data.stats.latestDate);
   }, [data]);
 
-  console.log(result, data);
+  console.log("DATA", data);
   const columns = [
     {
       name: "ID",
@@ -103,6 +106,16 @@ function App() {
           </div>
         )}
         <hr />
+
+        <section className="chart--container">
+          <div>
+            <PieChartComp data={data.boroughStats} />
+            <h4>Chart Showing Crash Distribution in NYC</h4>
+          </div>
+          <div>
+            <CrashBarChart />
+          </div>
+        </section>
 
         <section>
           <h2>Latest Crash History in NYC</h2>

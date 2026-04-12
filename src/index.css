@@ -83,6 +83,7 @@ h2 {
 .main--container {
   display: flex;
   width: 100%;
+  gap: 30px;
 }
 
 .sidebar {
@@ -389,4 +390,11 @@ center {
     font-size: 20px;
     font-family: "Poppins";
   }
+}
+
+.chart--container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
 }
