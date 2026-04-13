@@ -35,8 +35,12 @@
 body {
   margin: 0;
   font-family: "Poppins";
-  background: linear-gradient(rgb(221, 255, 232), rgb(226, 255, 238));
+  background: linear-gradient(rgb(226, 244, 255));
   background-attachment: fixed;
+}
+
+a {
+  color: unset;
 }
 
 #root {
@@ -55,8 +59,6 @@ h1 {
   font-size: 40px;
   letter-spacing: -1.68px;
   margin: 32px 0;
-  font-variant: small-caps;
-  font-family: "Courier New", Courier, monospace;
 
   @media (max-width: 1024px) {
     font-size: 36px;
@@ -69,7 +71,6 @@ h2 {
   letter-spacing: -0.24px;
   margin: 0 0 8px;
 
-  font-family: "Courier New", Courier, monospace;
   text-align: center;
   @media (max-width: 1024px) {
     font-size: 20px;
@@ -79,15 +80,12 @@ h2 {
 .main--container {
   display: flex;
   width: 100%;
+  gap: 30px;
 }
 
 .sidebar {
   /* position: fixed; */
-  background: linear-gradient(
-    rgb(36, 186, 255),
-    rgb(64, 236, 64),
-    rgb(0, 255, 234)
-  );
+  background: linear-gradient(rgb(13, 0, 61), rgb(50, 0, 97));
   background-attachment: fixed;
   color: white;
   border-radius: 0 1rem 1rem 0;
@@ -98,7 +96,7 @@ h2 {
 main {
   width: 100%;
   background-attachment: fixed;
-  padding: 1rem;
+  padding: 1rem 3rem;
 }
 
 .kpi-container {
@@ -168,13 +166,25 @@ table {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: #f0f8ff; /* light blue for odd rows */
+  background-color: #3492e6; /* light blue for odd rows */
 }
 
-aside h2 {
+.sidebar-header {
   font-family: "Poppins";
   color: white;
-  margin-bottom: 2rem;
+
+  h2 {
+    text-align: left;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  p {
+    font-family: "Poppins";
+    font-weight: 300;
+    font-size: 14px;
+  }
+  /* margin-bottom: 2rem; */
 }
 
 .sidebar--item {
@@ -188,12 +198,21 @@ aside h2 {
 
   h3 {
     margin: 0;
-    font-size: 20px;
-    font-weight: 300;
+    font-size: 25px;
+    font-weight: 400;
   }
 
   &.active {
-    background-color: rgb(42, 151, 252);
+    background-color: rgb(214, 68, 0);
+  }
+
+  a {
+    color: unset;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    text-decoration: none;
+    font-weight: 600;
   }
 }
 
@@ -214,8 +233,178 @@ aside h2 {
   }
 }
 
+a button {
+  border: none;
+  background-color: #7abfff;
+  padding: 10px 20px;
+  border-radius: 1rem;
+}
+
 center {
   color: rgba(0, 153, 255, 0.945);
   font-size: 20px;
   font-weight: bold;
+}
+
+/* crash page styling */
+
+.crash-details {
+  max-width: 720px;
+  padding: 1.5rem;
+}
+
+/* Header */
+.crash-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.crash-title {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.crash-subtitle {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+.crash-badge {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.crash-badge--danger {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* Metric cards */
+.crash-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.metric-card {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.metric-card__label {
+  font-size: 12px;
+  color: #888;
+  margin: 0 0 4px;
+}
+
+.metric-card__value {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Sections */
+.crash-section {
+  border: 0.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  background-color: #f9fafb;
+}
+
+.crash-section__heading {
+  font-size: 13px;
+  font-weight: 500;
+  color: #888;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Table */
+.crash-table {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+}
+
+.crash-table__th {
+  text-align: left;
+  padding: 6px 0;
+  color: #888;
+  font-weight: 400;
+  border-bottom: 0.5px solid #e5e7eb;
+}
+
+.crash-table__th--center {
+  text-align: center;
+}
+
+.crash-table__row + .crash-table__row .crash-table__td {
+  border-top: 0.5px solid #e5e7eb;
+}
+
+.crash-table__td {
+  padding: 7px 0;
+}
+
+.crash-table__td--center {
+  text-align: center;
+}
+
+/* Detail list */
+.crash-dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+  margin: 0;
+}
+
+.crash-dl__item {
+  /* grouping wrapper */
+}
+
+.crash-dl__label {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.crash-dl__value {
+  font-size: 14px;
+  margin: 0;
+}
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  margin: auto;
+  h2 {
+    font-size: 20px;
+    font-family: "Poppins";
+  }
+}
+
+.chart--container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  font-size: 20px;
+}
+
+.data--table {
+  text-align: center;
 }
