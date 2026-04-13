@@ -2,12 +2,12 @@ import { RechartsDevtools } from "@recharts/devtools";
 import { Legend, PieChart, Pie, Tooltip, Sector } from "recharts";
 
 const COLORS = [
-  "#0088FE",
+  "#00fe7f",
   "rgb(109, 109, 109)",
-  "#FFBB28",
-  "#FF8042",
-  "#A28CF6",
-  "#FF6B6B",
+  "#fcac00",
+  "#fc5400",
+  "#3d0dff",
+  "#ff1919",
 ];
 
 const PieChartComp = (props) => {
@@ -24,9 +24,8 @@ const PieChartComp = (props) => {
     <PieChart
       style={{
         width: "100%",
-        aspectRatio: 1.618,
+        aspectRatio: 1.2,
         maxWidth: 700,
-        background: "#fff",
       }}
       responsive
       title="Pie Chart Showing Crash Distribution among borough"
@@ -34,17 +33,16 @@ const PieChartComp = (props) => {
       <Pie
         name="Chart"
         label
-        width={400}
+        width={500}
         data={formatted}
         cx="50%"
         cy="50%"
-        outerRadius="50%"
+        outerRadius="100%"
         fill="#2a2677"
         isAnimationActive={true}
         shape={(props) => <Sector {...props} fill={props.fill} />}
       ></Pie>
 
-      <Legend />
       <Tooltip />
       <RechartsDevtools />
     </PieChart>

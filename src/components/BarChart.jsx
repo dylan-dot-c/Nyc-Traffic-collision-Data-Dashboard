@@ -24,12 +24,12 @@ const months = [
   "Dec", // 11
 ];
 const COLORS = [
-  "#0088FE",
-  "rgb(0, 124, 48)",
-  "#FFBB28",
-  "#FF8042",
+  "#00fe3f",
+  "rgb(226, 0, 0)",
+  "#ff7e28",
+  "#42ffa1",
   "#A28CF6",
-  "#FF6B6B",
+  "#f1c500",
 ];
 const CrashBarChart = () => {
   const { loading, crashData } = useChartData();
@@ -57,7 +57,7 @@ const CrashBarChart = () => {
           width: "100%",
           maxWidth: "700px",
           maxHeight: "70vh",
-          aspectRatio: 1.618,
+          aspectRatio: 1.3,
         }}
         responsive
         data={formattedData}
@@ -69,16 +69,17 @@ const CrashBarChart = () => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
+        <XAxis dataKey="month" label />
         <YAxis width="auto" />
         <Tooltip />
         <Legend />
 
         <Bar
           dataKey="count"
+          label
           fill="#c2bfff"
-          activeBar={{ fill: "pink", stroke: "blue" }}
-          radius={[10, 10, 0, 0]}
+          activeBar={{ fill: "#510353", stroke: "white" }}
+          radius={[30, 30, 0, 0]}
         />
       </BarChart>
     </div>

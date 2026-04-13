@@ -24,9 +24,12 @@ const Sidebar = () => {
 
   return (
     <aside className="sidebar">
-      <h2>
-        <i class="bi bi-database-fill"></i>NYC Traffic Data
-      </h2>
+      <div className="sidebar-header">
+        <h2>NYC Traffic</h2>
+        <p>Data Dashboard</p>
+      </div>
+
+      <hr />
 
       <div className="items--container">
         {items.map((item, idx) => {
