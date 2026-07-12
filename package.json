@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "lucide": "^1.24.0",
+    "lucide-react": "^1.24.0",
     "react": "^19.2.4",
     "react-bootstrap": "^2.10.10",
     "react-data-table-component": "^7.7.0",
@@ -20,7 +22,8 @@
     "react-router": "^7.14.0",
     "react-router-dom": "^7.14.0",
     "recharts": "^3.8.1",
-    "soda3-query": "^0.8.1"
+    "soda3-query": "^0.8.1",
+    "swr": "^2.4.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

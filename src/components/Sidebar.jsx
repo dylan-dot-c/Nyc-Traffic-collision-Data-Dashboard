@@ -1,44 +1,68 @@
-import { RiDashboardHorizontalFill } from "react-icons/ri";
-import { GrOverview } from "react-icons/gr";
-import { BsClipboardData } from "react-icons/bs";
 import { Link } from "react-router";
+import { BarChart3, Database, TrendingUp, XIcon } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
-const Sidebar = () => {
+const Sidebar = ({ open, setClose }) => {
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setClose();
+      }
+    };
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open, setClose]);
   const items = [
     {
-      title: "DashBoard",
-      icon: <RiDashboardHorizontalFill size={30} />,
-      url: "/",
-    },
-    {
       title: "Overview",
-      icon: <GrOverview size={30} />,
+      icon: <BarChart3 size={30} />,
       url: "/",
     },
     {
       title: "Deep Dive",
-      icon: <BsClipboardData size={30} />,
-      url: "/",
+      icon: <TrendingUp size={30} />,
+      url: "/deep-dive",
+    },
+    {
+      title: "Raw Data",
+      icon: <Database size={30} />,
+      url: "/raw-data",
     },
   ];
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${open ? "open" : ""}`} ref={sidebarRef}>
       <div className="sidebar-header">
-        <h2>NYC Traffic</h2>
-        <p>Data Dashboard</p>
+        <div className="sb-top">
+          <h2>NYC Traffic Analytics</h2> {open && <XIcon onClick={setClose} />}
+        </div>
+        <p>Collison Data Dashboard</p>
       </div>
 
       <hr />
 
       <div className="items--container">
-        {items.map((item, idx) => {
+        {items.map((item) => {
           return (
-            <div className={`sidebar--item ${idx == 0 && "active"}`}>
-              <Link to={item.url}>
-                <span>{item.icon}</span> <h3>{item.title}</h3>
-              </Link>
-            </div>
+            <NavLink
+              to={item.url}
+              key={item.url}
+              onClick={setClose}
+              className={({ isActive }) =>
+                `sidebar--item ${isActive ? "active" : ""}`
+              }
+            >
+              <span>{item.icon}</span> <h3>{item.title}</h3>
+            </NavLink>
           );
         })}
       </div>

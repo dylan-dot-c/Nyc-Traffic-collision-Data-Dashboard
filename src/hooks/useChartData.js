@@ -1,22 +1,23 @@
-import { useState, useEffect } from "react";
+import useSWR from "swr";
 import getCrashesPerMonth from "../queries/getCrashesPerMonth";
 
+const fetcher = async () => {
+  const result = await getCrashesPerMonth();
+  return result.data;
+};
+
 const useChartData = () => {
-  const [crashData, setCrashData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data, error, isLoading } = useSWR("crashes-per-month", fetcher, {
+    revalidateOnFocus: false,
+    revalidateIfStale: false,
+    refreshInterval: 5 * 60 * 1000,
+  });
 
-  useEffect(() => {
-    const load = async () => {
-      const result = await getCrashesPerMonth();
-      setCrashData(result.data);
-
-      setLoading(false);
-    };
-
-    load();
-  }, []);
-
-  return { loading, crashData };
+  return {
+    crashData: data ?? [],
+    loading: isLoading,
+    error,
+  };
 };
 
 export default useChartData;
